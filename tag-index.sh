@@ -37,3 +37,4 @@ for FILE in $FILES; do
 done
 IFS="$OIFS"
 
+echo "Found $(echo \"$FILES\" | wc -l) tagged files"
