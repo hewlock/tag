@@ -32,8 +32,8 @@ Usage: tag add [OPTIONS] TAGS [FILES]...
   FILES list of files
 
   Examples:
-    tag add mytag myfile.txt
-    tag add mytag1,mytag2 *.txt
+    tag add my-tag my-file.txt
+    tag add my-tag-1,my-tag-2 *.txt
 
 Options:
   --help  Show this message and exit.
