@@ -21,8 +21,8 @@ def add(ctx, tags, files):
     
     \b
     Examples:
-      tag add mytag myfile.txt
-      tag add mytag1,mytag2 *.txt
+      tag add my-tag myfile.txt
+      tag add my-tag-1,my-tag-2 *.txt
     '''
     print(f'tags: {tags}')
     print(f'files: {files}')
