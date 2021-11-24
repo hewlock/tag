@@ -1,8 +1,10 @@
 # tag-cli
 
-CLI to manage file tags. Tags start with `{`; have one or more letters, numbers or `-`; then end with `{`.
+CLI to manage file tags. Tags start with `{`; have one or more letters, numbers or `-`; then end with `}`.
 
-Regex: `\{[a-zA-Z0-9-]\}`.
+Regex: `\{[a-zA-Z0-9-]\}`
+
+Example: `my-file{my-tag-1}{my-tag-2}.txt`
 
 ## Usage
 
