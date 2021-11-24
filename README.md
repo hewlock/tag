@@ -1,26 +1,38 @@
-# tag
+# tag-cli
 
-Scripts to manage file tags. File tags start with `#` and have one or more letters, numbers or `-`.
-Regex: `#[a-zA-Z0-9-]`.
-Example tagged files:
+CLI to manage file tags. Tags start with `{`; have one or more letters, numbers or `-`; then end with `{`.
 
-```
-My File #tag1 #tag2.md
-super-cool-file#tag1#tag2.md
-```
+Regex: `\{[a-zA-Z0-9-]\}`.
 
 ## Usage
 
-### Synopsis
+```
+Usage: tag [OPTIONS] COMMAND [ARGS]...
+
+  tag-cli: filename tags v0.1
+
+Options:
+  --verbose / --quiet
+  --help               Show this message and exit.
+
+Commands:
+  add  Add tags to files.
+```
+
+### Add
 
 ```
-tag-index.sh SRC DEST
-```
-    
-### Index
+Usage: tag add [OPTIONS] TAGS [FILES]...
 
-Find tagged files in `SRC` and index them in `DST`. `DST` will have one folder per tag with each tagged file symlinked inside.
+  Add tags to files.
 
-```
-bash ./tag-files.sh ~/Documents ~/Tags
+  TAGS  comma seperated list of tags
+  FILES list of files
+
+  Examples:
+    tag add mytag myfile.txt
+    tag add mytag1,mytag2 *.txt
+
+Options:
+  --help  Show this message and exit.
 ```
