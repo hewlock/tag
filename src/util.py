@@ -22,8 +22,21 @@ def parse(file):
 
 def unparse(file_obj):
     tags = sorted(file_obj['tags'])
+    tag_text = '{' + '}{'.join(tags) + '}' if len(tags) > 0 else ''
     return file_obj['dir']\
         + '/'\
         + file_obj['base']\
-        + '{' + '}{'.join(tags) + '}'\
+        + tag_text\
         + file_obj['ext']
+
+def process_files(verbose, debug, files, tag_handler):
+    for src in files:
+        file_obj = parse(src)
+        tag_handler(file_obj['tags'])
+        dst = unparse(file_obj)
+        if src == dst:
+            continue
+        if verbose:
+            print(f"{src} -> {dst}")
+        if not debug:
+            os.rename(src, dst)

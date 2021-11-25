@@ -41,11 +41,24 @@ def add(verbose, debug, tags, files):
       - tag add my-tag-1,my-tag-2 *.txt
     '''
     add_tags = tags.split(',')
-    for src in files:
-        file_obj = util.parse(src)
-        file_obj['tags'].update(add_tags)
-        dst = util.unparse(file_obj)
-        if verbose:
-            print(f"{src} -> {dst}")
-        if not debug:
-            os.rename(src, dst)
+    util.process_files(verbose, debug, files, lambda tag_set: tag_set.update(add_tags))
+
+@cli.command()
+@click.option('--verbose', '-v', default=False, is_flag=True, help='Print additional output.')
+@click.option('--debug', '-d', default=False, is_flag=True, help='Make no changes to the file system.')
+@click.argument('tags')
+@click.argument('files', nargs=-1, type=click.Path(exists=True))
+def remove(verbose, debug, tags, files):
+    '''Remove tags from files.
+
+    \b
+    TAGS  comma seperated list of tags
+    FILES list of files
+
+    \b
+    Examples:
+      - tag remove my-tag myfile{my-tag}.txt
+      - tag remove my-tag-1,my-tag-2 *.txt
+    '''
+    remove_tags = tags.split(',')
+    util.process_files(verbose, debug, files, lambda tag_set: tag_set.difference_update(remove_tags))
