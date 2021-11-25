@@ -1,17 +1,9 @@
 # tag-cli
 
-CLI to manage file tags. Tags start with `{`; have one or more letters, numbers or `-`; then end with `}`.
-
-Regex: `\{[a-zA-Z0-9-]\}`
-
-Example: `my-file{my-tag-1}{my-tag-2}.txt`
-
-## Usage
-
 ```
 Usage: tag [OPTIONS] COMMAND [ARGS]...
 
-  tag-cli: filename tags v0.1
+  tag-cli: file name tag manager
 
   File tags:
     - are in the file name directly before the extension
@@ -23,15 +15,14 @@ Usage: tag [OPTIONS] COMMAND [ARGS]...
     - My Title Case File {My-Tag-1}{My-Tag-2}.txt
 
 Options:
-  -v, --verbose  Print additional output.
-  -d, --debug    Make no changes to the file system.
-  --help         Show this message and exit.
+  --version  Print version.
+  --help     Show this message and exit.
 
 Commands:
   add  Add tags to files.
 ```
 
-### Add
+## Add
 
 ```
 Usage: tag add [OPTIONS] TAGS [FILES]...
@@ -46,5 +37,7 @@ Usage: tag add [OPTIONS] TAGS [FILES]...
     - tag add my-tag-1,my-tag-2 *.txt
 
 Options:
-  --help  Show this message and exit.
+  -v, --verbose  Print additional output.
+  -d, --debug    Make no changes to the file system.
+  --help         Show this message and exit.
 ```

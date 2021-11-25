@@ -2,12 +2,12 @@ import click
 import os
 import src.util as util
 
+VERSION = '0.1'
+
 @click.group(invoke_without_command=True)
-@click.pass_context
-@click.option('--verbose', '-v', default=False, is_flag=True, help='Print additional output.')
-@click.option('--debug', '-d', default=False, is_flag=True, help='Make no changes to the file system.')
-def cli(ctx, verbose, debug):
-    '''tag-cli: filename tags v0.1
+@click.option('--version', default=False, is_flag=True, help='Print version.')
+def cli(version):
+    '''tag-cli: file name tag manager
 
     \b
     File tags:
@@ -20,15 +20,15 @@ def cli(ctx, verbose, debug):
       - myfile{my-tag-1}{my-tag-2}.txt
       - My Title Case File {My-Tag-1}{My-Tag-2}.txt
     '''
-    ctx.ensure_object(dict)
-    ctx.obj['verbose'] = verbose
-    ctx.obj['debug'] = debug
+    if version:
+        print(VERSION)
 
 @cli.command()
-@click.pass_context
+@click.option('--verbose', '-v', default=False, is_flag=True, help='Print additional output.')
+@click.option('--debug', '-d', default=False, is_flag=True, help='Make no changes to the file system.')
 @click.argument('tags')
 @click.argument('files', nargs=-1, type=click.Path(exists=True))
-def add(ctx, tags, files):
+def add(verbose, debug, tags, files):
     '''Add tags to files.
 
     \b
@@ -45,7 +45,7 @@ def add(ctx, tags, files):
         file_obj = util.parse(src)
         file_obj['tags'].update(add_tags)
         dst = util.unparse(file_obj)
-        if ctx.obj['verbose']:
+        if verbose:
             print(f"{src} -> {dst}")
-        if not ctx.obj['debug']:
+        if not debug:
             os.rename(src, dst)
