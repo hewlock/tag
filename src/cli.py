@@ -6,7 +6,8 @@ VERSION = '0.1'
 
 @click.group(invoke_without_command=True)
 @click.option('--version', default=False, is_flag=True, help='Print version.')
-def cli(version):
+@click.pass_context
+def cli(ctx, version):
     '''tag-cli: file name tag manager
 
     \b
@@ -21,7 +22,9 @@ def cli(version):
       - My Title Case File {My-Tag-1}{My-Tag-2}.txt
     '''
     if version:
-        print(VERSION)
+        click.echo(VERSION)
+    elif ctx.invoked_subcommand is None:
+        click.echo(ctx.get_help())
 
 @cli.command()
 @click.option('--verbose', '-v', default=False, is_flag=True, help='Print additional output.')

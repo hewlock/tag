@@ -1,3 +1,4 @@
+import click
 import os
 import re
 
@@ -37,6 +38,6 @@ def process_files(verbose, debug, files, tag_handler):
         if src == dst:
             continue
         if verbose:
-            print(f"{src} -> {dst}")
+            click.echo(f"{src} -> {dst}")
         if not debug:
             os.rename(src, dst)
