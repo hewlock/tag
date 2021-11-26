@@ -165,7 +165,7 @@ def set(verbose, debug, tags, files):
 @opt_debug()
 @arg_files()
 def sort(verbose, debug, files):
-    '''Sort file tags.
+    '''Sort tags on files.
 
     \b
     FILES list of files

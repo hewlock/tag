@@ -24,7 +24,7 @@ Commands:
   remove  Remove tags from files.
   rename  Rename a tag on files.
   set     Set tags on files.
-  sort    Sort file tags.
+  sort    Sort tags on files.
 ```
 
 ## Add
@@ -135,7 +135,7 @@ Options:
 ```
 Usage: tag sort [OPTIONS] [FILES]...
 
-  Sort file tags.
+  Sort tags on files.
 
   FILES list of files
 
