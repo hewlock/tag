@@ -21,6 +21,7 @@ Options:
 Commands:
   add     Add tags to files.
   clear   Clear tags from files.
+  list    List all tags used in a directory.
   remove  Remove tags from files.
   rename  Rename a tag on files.
   set     Set tags on files.
@@ -64,6 +65,26 @@ Options:
   -v, --verbose  Print additional output.
   -d, --debug    Make no changes to the file system.
   --help         Show this message and exit.
+```
+
+## List
+
+```
+Usage: tag list [OPTIONS] PATH
+
+  List all tags used in a directory.
+
+  PATH path to search
+
+  Examples:
+    - tag list .
+
+Options:
+  -a, --all        Include hidden files.
+  -c, --count      Display count of matches.
+  -0, --null       End output lines with NULL (\0) instead of newline.
+  -R, --recursive  Include subdirectories recursively.
+  --help           Show this message and exit.
 ```
 
 ## Remove

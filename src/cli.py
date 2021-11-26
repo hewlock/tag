@@ -6,8 +6,20 @@ VERSION = '0.1'
 
 # Options
 
+def opt_all():
+    return click.option('--all', '-a', default=False, is_flag=True, help='Include hidden files.')
+
+def opt_count():
+    return click.option('--count', '-c', default=False, is_flag=True, help='Display count of matches.')
+
 def opt_debug():
     return click.option('--debug', '-d', default=False, is_flag=True, help='Make no changes to the file system.')
+
+def opt_null():
+    return click.option('--null', '-0', default=False, is_flag=True, help='End output lines with NULL (\\0) instead of newline.')
+
+def opt_recursive():
+    return click.option('--recursive', '-R', default=False, is_flag=True, help='Include subdirectories recursively.')
 
 def opt_verbose():
     return click.option('--verbose', '-v', default=False, is_flag=True, help='Print additional output.')
@@ -16,6 +28,9 @@ def opt_version():
     return click.option('--version', default=False, is_flag=True, help='Print version.')
 
 # Arguments
+
+def arg_path():
+    return click.argument('path', type=click.Path(exists=True))
 
 def arg_files():
     return click.argument('files', nargs=-1, type=click.Path(exists=True))
@@ -53,12 +68,12 @@ def cli(ctx, version):
     elif ctx.invoked_subcommand is None:
         click.echo(ctx.get_help())
 
-@cli.command()
+@cli.command('add')
 @opt_verbose()
 @opt_debug()
 @arg_tags()
 @arg_files()
-def add(verbose, debug, tags, files):
+def _add(verbose, debug, tags, files):
     '''Add tags to files.
 
     \b
@@ -73,11 +88,11 @@ def add(verbose, debug, tags, files):
     tag_list = tags.split(',')
     util.rename_files(verbose, debug, files, lambda tag_set: tag_set.update(tag_list))
 
-@cli.command()
+@cli.command('clear')
 @opt_verbose()
 @opt_debug()
 @arg_files()
-def clear(verbose, debug, files):
+def _clear(verbose, debug, files):
     '''Clear tags from files.
 
     \b
@@ -90,12 +105,12 @@ def clear(verbose, debug, files):
     '''
     util.rename_files(verbose, debug, files, lambda tag_set: tag_set.clear())
 
-@cli.command()
+@cli.command('remove')
 @opt_verbose()
 @opt_debug()
 @arg_tags()
 @arg_files()
-def remove(verbose, debug, tags, files):
+def _remove(verbose, debug, tags, files):
     '''Remove tags from files.
 
     \b
@@ -110,13 +125,53 @@ def remove(verbose, debug, tags, files):
     tag_list = tags.split(',')
     util.rename_files(verbose, debug, files, lambda tag_set: tag_set.difference_update(tag_list))
 
-@cli.command()
+@cli.command('list')
+@opt_all()
+@opt_count()
+@opt_null()
+@opt_recursive()
+@arg_path()
+def _list(all, count, null, recursive, path):
+    '''List all tags used in a directory.
+
+    \b
+    PATH path to search
+
+    \b
+    Examples:
+      - tag list .
+    '''
+    file_list = []
+    if recursive:
+        for root, dirs, files in os.walk(path):
+            file_list.extend(files)
+    else:
+        for entry in os.scandir(path):
+            if entry.is_file() and (all or not entry.name.startswith('.')):
+                file_list.append(entry.name)
+
+    tags = {}
+    for file in file_list:
+        if all or not file.startswith('.'):
+            for tag in util.get_tags(file):
+                tags[tag] = 1 if not tag in tags else tags[tag] + 1
+
+    output = []
+    for tag in sorted(tags.keys()):
+        if count:
+            output.append(f"{tag}: {tags[tag]}")
+        else:
+            output.append(tag)
+    delimiter = '\0' if null else '\n'
+    click.echo(delimiter.join(output))
+
+@cli.command('rename')
 @opt_verbose()
 @opt_debug()
 @arg_old_tag()
 @arg_new_tag()
 @arg_files()
-def rename(verbose, debug, old_tag, new_tag, files):
+def _rename(verbose, debug, old_tag, new_tag, files):
     '''Rename a tag on files.
 
     \b
@@ -135,12 +190,12 @@ def rename(verbose, debug, old_tag, new_tag, files):
             tag_set.add(new_tag)
     util.rename_files(verbose, debug, files, tag_handler)
 
-@cli.command()
+@cli.command('set')
 @opt_verbose()
 @opt_debug()
 @arg_tags()
 @arg_files()
-def set(verbose, debug, tags, files):
+def _set(verbose, debug, tags, files):
     '''Set tags on files.
 
     Add and remove tags to ensure each file has the supplied tags and only the supplied tags.
@@ -160,11 +215,11 @@ def set(verbose, debug, tags, files):
         tag_set.update(tag_list)
     util.rename_files(verbose, debug, files, tag_handler)
 
-@cli.command()
+@cli.command('sort')
 @opt_verbose()
 @opt_debug()
 @arg_files()
-def sort(verbose, debug, files):
+def _sort(verbose, debug, files):
     '''Sort tags on files.
 
     \b

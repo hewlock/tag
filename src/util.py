@@ -4,15 +4,24 @@ import re
 
 TAG_RE = re.compile(r'\{[a-zA-Z0-9-]+\}')
 
+def get_raw_tags(filename):
+    return TAG_RE.findall(filename)
+
+def get_tag(raw_tag):
+    return raw_tag[1:-1]
+
+def get_tags(filename):
+    return map(get_tag, get_raw_tags(filename))
+
 def parse(file):
     dir, filename = os.path.split(file)
     base, ext = os.path.splitext(filename)
-    raw_tags = TAG_RE.findall(base)
+    raw_tags = get_raw_tags(base)
     tags = set()
 
     for raw_tag in raw_tags:
         base = base.replace(raw_tag, '')
-        tags.add(raw_tag[1:-1])
+        tags.add(get_tag(raw_tag))
 
     return {
         'base': base,
