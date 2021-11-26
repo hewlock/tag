@@ -31,6 +31,7 @@ def unparse(file_obj):
         + file_obj['ext']
 
 def rename_files(verbose, debug, files, tag_handler):
+    count = 0
     for src in files:
         file_obj = parse(src)
         tag_handler(file_obj['tags'])
@@ -41,3 +42,7 @@ def rename_files(verbose, debug, files, tag_handler):
             click.echo(f"{src} -> {dst}")
         if not debug:
             os.rename(src, dst)
+            count += 1
+    if verbose and count > 0:
+        click.echo()
+        click.echo(f"{count} files affected.")
