@@ -30,7 +30,7 @@ def unparse(file_obj):
         + tag_text\
         + file_obj['ext']
 
-def process_files(verbose, debug, files, tag_handler):
+def rename_files(verbose, debug, files, tag_handler):
     for src in files:
         file_obj = parse(src)
         tag_handler(file_obj['tags'])

@@ -4,8 +4,29 @@ import src.util as util
 
 VERSION = '0.1'
 
+# Options
+
+def opt_debug():
+    return click.option('--debug', '-d', default=False, is_flag=True, help='Make no changes to the file system.')
+
+def opt_verbose():
+    return click.option('--verbose', '-v', default=False, is_flag=True, help='Print additional output.')
+
+def opt_version():
+    return click.option('--version', default=False, is_flag=True, help='Print version.')
+
+# Arguments
+
+def arg_tags():
+    return click.argument('tags')
+
+def arg_files():
+    return click.argument('files', nargs=-1, type=click.Path(exists=True))
+
+# CLI
+
 @click.group(invoke_without_command=True)
-@click.option('--version', default=False, is_flag=True, help='Print version.')
+@opt_version()
 @click.pass_context
 def cli(ctx, version):
     '''tag-cli: file name tag manager
@@ -27,10 +48,10 @@ def cli(ctx, version):
         click.echo(ctx.get_help())
 
 @cli.command()
-@click.option('--verbose', '-v', default=False, is_flag=True, help='Print additional output.')
-@click.option('--debug', '-d', default=False, is_flag=True, help='Make no changes to the file system.')
-@click.argument('tags')
-@click.argument('files', nargs=-1, type=click.Path(exists=True))
+@opt_verbose()
+@opt_debug()
+@arg_tags()
+@arg_files()
 def add(verbose, debug, tags, files):
     '''Add tags to files.
 
@@ -43,14 +64,31 @@ def add(verbose, debug, tags, files):
       - tag add my-tag myfile.txt
       - tag add my-tag-1,my-tag-2 *.txt
     '''
-    add_tags = tags.split(',')
-    util.process_files(verbose, debug, files, lambda tag_set: tag_set.update(add_tags))
+    tag_list = tags.split(',')
+    util.rename_files(verbose, debug, files, lambda tag_set: tag_set.update(tag_list))
 
 @cli.command()
-@click.option('--verbose', '-v', default=False, is_flag=True, help='Print additional output.')
-@click.option('--debug', '-d', default=False, is_flag=True, help='Make no changes to the file system.')
-@click.argument('tags')
-@click.argument('files', nargs=-1, type=click.Path(exists=True))
+@opt_verbose()
+@opt_debug()
+@arg_files()
+def clear(verbose, debug, files):
+    '''Clear tags from files.
+
+    \b
+    FILES list of files
+
+    \b
+    Examples:
+      - tag clear myfile{my-tag}.txt
+      - tag clear *.txt
+    '''
+    util.rename_files(verbose, debug, files, lambda tag_set: tag_set.clear())
+
+@cli.command()
+@opt_verbose()
+@opt_debug()
+@arg_tags()
+@arg_files()
 def remove(verbose, debug, tags, files):
     '''Remove tags from files.
 
@@ -63,5 +101,47 @@ def remove(verbose, debug, tags, files):
       - tag remove my-tag myfile{my-tag}.txt
       - tag remove my-tag-1,my-tag-2 *.txt
     '''
-    remove_tags = tags.split(',')
-    util.process_files(verbose, debug, files, lambda tag_set: tag_set.difference_update(remove_tags))
+    tag_list = tags.split(',')
+    util.rename_files(verbose, debug, files, lambda tag_set: tag_set.difference_update(tag_list))
+
+@cli.command()
+@opt_verbose()
+@opt_debug()
+@arg_tags()
+@arg_files()
+def set(verbose, debug, tags, files):
+    '''Set tags on files.
+
+    Add and remove tags to ensure each file has the supplied tags and only the supplied tags.
+
+    \b
+    TAGS  comma seperated list of tags
+    FILES list of files
+
+    \b
+    Examples:
+      - tag set my-tag myfile{my-tag}.txt
+      - tag set my-tag-1,my-tag-2 *.txt
+    '''
+    tag_list = tags.split(',')
+    def tag_handler(tag_set):
+        tag_set.clear()
+        tag_set.update(tag_list)
+    util.rename_files(verbose, debug, files, tag_handler)
+
+@cli.command()
+@opt_verbose()
+@opt_debug()
+@arg_files()
+def sort(verbose, debug, files):
+    '''Sort file tags.
+
+    \b
+    FILES list of files
+
+    \b
+    Examples:
+      - tag sort myfile{my-tag-2}{my-tag-1}.txt
+      - tag sort *.txt
+    '''
+    util.rename_files(verbose, debug, files, lambda tag_set: tag_set)
