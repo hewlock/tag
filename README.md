@@ -22,6 +22,7 @@ Commands:
   add     Add tags to files.
   clear   Clear tags from files.
   remove  Remove tags from files.
+  rename  Rename a tag on files.
   set     Set tags on files.
   sort    Sort file tags.
 ```
@@ -78,6 +79,27 @@ Usage: tag remove [OPTIONS] TAGS [FILES]...
   Examples:
     - tag remove my-tag myfile{my-tag}.txt
     - tag remove my-tag-1,my-tag-2 *.txt
+
+Options:
+  -v, --verbose  Print additional output.
+  -d, --debug    Make no changes to the file system.
+  --help         Show this message and exit.
+```
+
+## Rename
+
+```
+Usage: tag rename [OPTIONS] OLD_TAG NEW_TAG [FILES]...
+
+  Rename a tag on files.
+
+  OLD_TAG current tag name
+  NEW_TAG new tag name
+  FILES list of files
+
+  Examples:
+    - tag rename my-tag my-new-tag myfile{my-tag}.txt
+    - tag rename my-tag my-new-tag *.txt
 
 Options:
   -v, --verbose  Print additional output.

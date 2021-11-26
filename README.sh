@@ -18,5 +18,6 @@ echo "\`\`\`"
 help Add add
 help Clear clear
 help Remove remove
+help Rename rename
 help Set set
 help Sort sort

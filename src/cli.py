@@ -17,11 +17,17 @@ def opt_version():
 
 # Arguments
 
+def arg_files():
+    return click.argument('files', nargs=-1, type=click.Path(exists=True))
+
 def arg_tags():
     return click.argument('tags')
 
-def arg_files():
-    return click.argument('files', nargs=-1, type=click.Path(exists=True))
+def arg_old_tag():
+    return click.argument('old_tag')
+
+def arg_new_tag():
+    return click.argument('new_tag')
 
 # CLI
 
@@ -103,6 +109,31 @@ def remove(verbose, debug, tags, files):
     '''
     tag_list = tags.split(',')
     util.rename_files(verbose, debug, files, lambda tag_set: tag_set.difference_update(tag_list))
+
+@cli.command()
+@opt_verbose()
+@opt_debug()
+@arg_old_tag()
+@arg_new_tag()
+@arg_files()
+def rename(verbose, debug, old_tag, new_tag, files):
+    '''Rename a tag on files.
+
+    \b
+    OLD_TAG current tag name
+    NEW_TAG new tag name
+    FILES list of files
+
+    \b
+    Examples:
+      - tag rename my-tag my-new-tag myfile{my-tag}.txt
+      - tag rename my-tag my-new-tag *.txt
+    '''
+    def tag_handler(tag_set):
+        if old_tag in tag_set:
+            tag_set.remove(old_tag)
+            tag_set.add(new_tag)
+    util.rename_files(verbose, debug, files, tag_handler)
 
 @cli.command()
 @opt_verbose()
