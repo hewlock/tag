@@ -17,6 +17,7 @@ echo "\`\`\`"
 
 help Add add
 help Clear clear
+help Find find
 help List list
 help Remove remove
 help Rename rename

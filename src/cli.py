@@ -30,10 +30,13 @@ def opt_version():
 # Arguments
 
 def arg_path():
-    return click.argument('path', type=click.Path(exists=True))
+    return click.argument('path', default='.', type=click.Path(exists=True))
 
 def arg_files():
     return click.argument('files', nargs=-1, type=click.Path(exists=True))
+
+def arg_tag():
+    return click.argument('tag')
 
 def arg_tags():
     return click.argument('tags')
@@ -105,6 +108,34 @@ def _clear(verbose, debug, files):
     '''
     util.rename_files(verbose, debug, files, lambda tag_set: tag_set.clear())
 
+@cli.command('find')
+@opt_all()
+@opt_null()
+@opt_recursive()
+@arg_tag()
+@arg_path()
+def _find(all, null, recursive, tag, path):
+    '''Find files by tag.
+
+    \b
+    TAG  tag to find
+    PATH path to search (default .)
+
+    \b
+    Examples:
+      - tag find -R my-tag path/to/files/
+      - tag find my-tag
+    '''
+    file_list = []
+    def handle_file(file):
+        if tag in file['tags']:
+            file_list.append(file)
+    util.find_files(path, recursive, all, handle_file)
+
+    output = sorted(map(lambda f: f['original'], file_list))
+    delimiter = '\0' if null else '\n'
+    click.echo(delimiter.join(output))
+
 @cli.command('remove')
 @opt_verbose()
 @opt_debug()
@@ -132,29 +163,21 @@ def _remove(verbose, debug, tags, files):
 @opt_recursive()
 @arg_path()
 def _list(all, count, null, recursive, path):
-    '''List all tags used in a directory.
+    '''List tags on files.
 
     \b
-    PATH path to search
+    PATH path to search (default .)
 
     \b
     Examples:
-      - tag list .
+      - tag list -R path/to/files/
+      - tag list
     '''
-    file_list = []
-    if recursive:
-        for root, dirs, files in os.walk(path):
-            file_list.extend(files)
-    else:
-        for entry in os.scandir(path):
-            if entry.is_file() and (all or not entry.name.startswith('.')):
-                file_list.append(entry.name)
-
     tags = {}
-    for file in file_list:
-        if all or not file.startswith('.'):
-            for tag in util.get_tags(file):
-                tags[tag] = 1 if not tag in tags else tags[tag] + 1
+    def handle_file(file):
+        for tag in file['tags']:
+            tags[tag] = 1 if not tag in tags else tags[tag] + 1
+    util.find_files(path, recursive, all, handle_file)
 
     output = []
     for tag in sorted(tags.keys()):

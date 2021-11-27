@@ -27,6 +27,7 @@ def parse(file):
         'base': base,
         'dir': dir,
         'ext': ext,
+        'original': file,
         'tags': tags,
     }
 
@@ -55,3 +56,19 @@ def rename_files(verbose, debug, files, tag_handler):
     if verbose and count > 0:
         click.echo()
         click.echo(f"{count} files affected.")
+
+def find_files(path, recursive, all, handler):
+    def filename_p(filename):
+        return all or not filename.startswith('.')
+
+    def found(root, file):
+        handler(parse(os.path.join(root, file)))
+
+    if recursive:
+        for root, dirs, files in os.walk(path):
+            for file in filter(filename_p, files):
+                found(root, file)
+    else:
+        for entry in os.scandir(path):
+            if entry.is_file() and filename_p(entry.name):
+                found(path, entry.name)

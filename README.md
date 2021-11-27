@@ -21,7 +21,8 @@ Options:
 Commands:
   add     Add tags to files.
   clear   Clear tags from files.
-  list    List all tags used in a directory.
+  find    Find files by tag.
+  list    List tags on files.
   remove  Remove tags from files.
   rename  Rename a tag on files.
   set     Set tags on files.
@@ -67,17 +68,39 @@ Options:
   --help         Show this message and exit.
 ```
 
+## Find
+
+```
+Usage: tag find [OPTIONS] TAG [PATH]
+
+  Find files by tag.
+
+  TAG  tag to find
+  PATH path to search (default .)
+
+  Examples:
+    - tag find -R my-tag path/to/files/
+    - tag find my-tag
+
+Options:
+  -a, --all        Include hidden files.
+  -0, --null       End output lines with NULL (\0) instead of newline.
+  -R, --recursive  Include subdirectories recursively.
+  --help           Show this message and exit.
+```
+
 ## List
 
 ```
-Usage: tag list [OPTIONS] PATH
+Usage: tag list [OPTIONS] [PATH]
 
-  List all tags used in a directory.
+  List tags on files.
 
-  PATH path to search
+  PATH path to search (default .)
 
   Examples:
-    - tag list .
+    - tag list -R path/to/files/
+    - tag list
 
 Options:
   -a, --all        Include hidden files.
