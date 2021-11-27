@@ -1,5 +1,4 @@
 import click
-import os
 import src.util as util
 
 VERSION = '0.1'
@@ -20,6 +19,9 @@ def opt_null():
 
 def opt_recursive():
     return click.option('--recursive', '-R', default=False, is_flag=True, help='Include subdirectories recursively.')
+
+def opt_tree():
+    return click.option('--tree', '-t', default=False, is_flag=True, help='Print output as tree.')
 
 def opt_verbose():
     return click.option('--verbose', '-v', default=False, is_flag=True, help='Print additional output.')
@@ -112,9 +114,10 @@ def _clear(verbose, debug, files):
 @opt_all()
 @opt_null()
 @opt_recursive()
+@opt_tree()
 @arg_tag()
 @arg_path()
-def _find(all, null, recursive, tag, path):
+def _find(all, null, recursive, tree, tag, path):
     '''Find files by tag.
 
     \b
@@ -132,9 +135,10 @@ def _find(all, null, recursive, tag, path):
             file_list.append(file)
     util.find_files(path, recursive, all, handle_file)
 
-    output = sorted(map(lambda f: f['original'], file_list))
+    file_list = sorted(map(lambda f: f['original'], file_list))
+    output = util.tree_output(path, file_list) if tree else file_list
     delimiter = '\0' if null else '\n'
-    click.echo(delimiter.join(output))
+    click.echo(delimiter.join(output), nl = not null)
 
 @cli.command('remove')
 @opt_verbose()
@@ -186,7 +190,7 @@ def _list(all, count, null, recursive, path):
         else:
             output.append(tag)
     delimiter = '\0' if null else '\n'
-    click.echo(delimiter.join(output))
+    click.echo(delimiter.join(output), nl = not null)
 
 @cli.command('rename')
 @opt_verbose()

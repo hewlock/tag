@@ -72,3 +72,59 @@ def find_files(path, recursive, all, handler):
         for entry in os.scandir(path):
             if entry.is_file() and filename_p(entry.name):
                 found(path, entry.name)
+
+def tree_output(path, files):
+    head, tail = os.path.split(path)
+    root = {
+        'children': [],
+        'dir': True,
+        'name': path,
+        'path': head if tail == '' else path,
+    }
+
+    index = 0;
+    node = root
+    done = False
+    while not done:
+        head, tail = os.path.split(files[index])
+        if head == node['path']:
+            node['children'].append({
+                'dir': False,
+                'name': tail,
+            })
+            index += 1
+            done = index == len(files)
+            continue
+
+        if head.startswith(node['path']):
+            new_path = None
+            while head != node['path']:
+                new_path = head
+                head, tail = os.path.split(head)
+            node = {
+                'children': [],
+                'dir': True,
+                'name': tail,
+                'path': new_path,
+                'parent': node,
+            }
+            node['parent']['children'].append(node)
+        else:
+            node = node['parent']
+
+    return node_output(root, '', [root['name']])
+
+def node_output(node, prefix, output):
+    children = node['children']
+    for index, child in enumerate(children):
+        child_prefix = None
+        if (index + 1 == len(children)):
+            child_prefix = f'{prefix}    '
+            output.append(f"{prefix}└── {child['name']}")
+        else:
+            child_prefix = f'{prefix}│   '
+            output.append(f"{prefix}├── {child['name']}")
+
+        if child['dir']:
+            node_output(child, child_prefix, output)
+    return output

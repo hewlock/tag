@@ -86,6 +86,7 @@ Options:
   -a, --all        Include hidden files.
   -0, --null       End output lines with NULL (\0) instead of newline.
   -R, --recursive  Include subdirectories recursively.
+  -t, --tree       Print output as tree.
   --help           Show this message and exit.
 ```
 
