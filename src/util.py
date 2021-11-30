@@ -40,6 +40,7 @@ def unparse(file_obj):
 def rename_files(verbose, debug, files, tag_handler):
     count = 0
     for src in files:
+        count += 1
         file_obj = parse(src)
         tag_handler(file_obj['tags'])
         dst = unparse(file_obj)
@@ -49,10 +50,10 @@ def rename_files(verbose, debug, files, tag_handler):
             click.echo(f"{src} -> {dst}")
         if not debug:
             os.rename(src, dst)
-            count += 1
     if verbose and count > 0:
+        message = 'to rename' if debug else 'renamed'
         click.echo()
-        click.echo(f"{count} files affected.")
+        click.echo(f"{count} files {message}.")
 
 def find_files(path, recursive, all, handler):
     def filename_p(filename):

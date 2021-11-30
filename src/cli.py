@@ -201,12 +201,16 @@ def _index(all, debug, recursive, verbose, path, output):
                 index[path] = []
             index[path].append(file)
 
+    count = 0
     for key in sorted(index.keys()):
-        print()
-        print(os.path.split(key)[0])
-        if len(index[key]) == 1:
+        index_len = len(index[key])
+        count += index_len
+        parent = os.path.split(key)[0]
+        if index_len == 1:
             file = index[key][0]
-            print(f"  {file['filename']} -> {file['original']}")
+            out_path = os.path.join(parent, file['filename'])
+            if verbose:
+                click.echo(f"{out_path} -> {file['original']}")
         else:
             for file in index[key]:
                 path = file['dir'][len(abspath)+1:]
@@ -216,7 +220,14 @@ def _index(all, debug, recursive, verbose, path, output):
                     id = '-'.join(split)
                     base, ext = os.path.splitext(filename)
                     filename = f"{base}-{id}{ext}"
-                print(f"  {filename} -> {file['original']}")
+                out_path = os.path.join(parent, filename)
+                if verbose:
+                    click.echo(f"{out_path} -> {file['original']}")
+    if verbose and count > 0:
+        message = 'to index' if debug else 'indexed'
+        click.echo()
+        click.echo(f"{count} files {message}.")
+
 
 @cli.command('list')
 @opt_all()
