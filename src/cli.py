@@ -1,7 +1,8 @@
 import click
-import src.util as util
+import os
+from . import util
 
-VERSION = '0.1'
+VERSION = '0.1.0'
 
 # Options
 
@@ -21,7 +22,7 @@ def opt_recursive():
     return click.option('--recursive', '-R', default=False, is_flag=True, help='Include subdirectories recursively.')
 
 def opt_tree():
-    return click.option('--tree', '-t', default=False, is_flag=True, help='Print output as tree.')
+    return click.option('--tree', '-T', default=False, is_flag=True, help='Print output as tree.')
 
 def opt_verbose():
     return click.option('--verbose', '-v', default=False, is_flag=True, help='Print additional output.')
@@ -33,6 +34,9 @@ def opt_version():
 
 def arg_path():
     return click.argument('path', default='.', type=click.Path(exists=True))
+
+def arg_output():
+    return click.argument('output')
 
 def arg_files():
     return click.argument('files', nargs=-1, type=click.Path(exists=True))
@@ -159,6 +163,60 @@ def _remove(verbose, debug, tags, files):
     '''
     tag_list = tags.split(',')
     util.rename_files(verbose, debug, files, lambda tag_set: tag_set.difference_update(tag_list))
+
+@cli.command('index')
+@opt_all()
+@opt_debug()
+@opt_recursive()
+@opt_verbose()
+@arg_path()
+@arg_output()
+def _index(all, debug, recursive, verbose, path, output):
+    '''Index tagged files.
+
+    \b
+    PATH   path to search
+    OUTPUT path to new index
+
+    \b
+    Examples:
+      - tag index my-files my-index
+      - tag index -R my-files my-index
+    '''
+    abspath = os.path.abspath(path)
+
+    file_list = []
+    def handle_file(file):
+        if len(file['tags']) > 0:
+            file_list.append(file)
+    util.find_files(abspath, recursive, all, handle_file)
+
+    index = {}
+    for file in file_list:
+        perms = util.permute(sorted(file['tags']))
+        for perm in perms:
+            filename = os.path.split(file['original'])[1]
+            path = os.path.join(output, *perm, filename)
+            if path not in index:
+                index[path] = []
+            index[path].append(file)
+
+    for key in sorted(index.keys()):
+        print()
+        print(os.path.split(key)[0])
+        if len(index[key]) == 1:
+            file = index[key][0]
+            print(f"  {file['filename']} -> {file['original']}")
+        else:
+            for file in index[key]:
+                path = file['dir'][len(abspath)+1:]
+                filename = file['filename']
+                if path:
+                    split = path.split(os.sep)
+                    id = '-'.join(split)
+                    base, ext = os.path.splitext(filename)
+                    filename = f"{base}-{id}{ext}"
+                print(f"  {filename} -> {file['original']}")
 
 @cli.command('list')
 @opt_all()

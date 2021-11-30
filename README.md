@@ -22,6 +22,7 @@ Commands:
   add     Add tags to files.
   clear   Clear tags from files.
   find    Find files by tag.
+  index   Index tagged files.
   list    List tags on files.
   remove  Remove tags from files.
   rename  Rename a tag on files.
@@ -86,7 +87,29 @@ Options:
   -a, --all        Include hidden files.
   -0, --null       End output lines with NULL (\0) instead of newline.
   -R, --recursive  Include subdirectories recursively.
-  -t, --tree       Print output as tree.
+  -T, --tree       Print output as tree.
+  --help           Show this message and exit.
+```
+
+## Index
+
+```
+Usage: tag index [OPTIONS] [PATH] OUTPUT
+
+  Index tagged files.
+
+  PATH   path to search
+  OUTPUT path to new index
+
+  Examples:
+    - tag index my-files my-index
+    - tag index -R my-files my-index
+
+Options:
+  -a, --all        Include hidden files.
+  -d, --debug      Make no changes to the file system.
+  -R, --recursive  Include subdirectories recursively.
+  -v, --verbose    Print additional output.
   --help           Show this message and exit.
 ```
 

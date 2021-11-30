@@ -27,6 +27,7 @@ def parse(file):
         'base': base,
         'dir': dir,
         'ext': ext,
+        'filename': filename,
         'original': file,
         'tags': tags,
     }
@@ -34,11 +35,7 @@ def parse(file):
 def unparse(file_obj):
     tags = sorted(file_obj['tags'])
     tag_text = '{' + '}{'.join(tags) + '}' if len(tags) > 0 else ''
-    return file_obj['dir']\
-        + '/'\
-        + file_obj['base']\
-        + tag_text\
-        + file_obj['ext']
+    return os.path.join(file_obj['dir'], f"{file_obj['base']}{tag_text}{file_obj['ext']}")
 
 def rename_files(verbose, debug, files, tag_handler):
     count = 0
@@ -72,6 +69,21 @@ def find_files(path, recursive, all, handler):
         for entry in os.scandir(path):
             if entry.is_file() and filename_p(entry.name):
                 found(path, entry.name)
+
+def permute(items):
+    return _permute([], items)
+
+def _permute(prefix, suffix):
+    if len(suffix) == 0:
+        return [prefix]
+    result = []
+    for index, item in enumerate(suffix):
+        child_prefix = prefix.copy()
+        child_prefix.append(item)
+        child_suffix = suffix.copy()
+        del child_suffix[index]
+        result = result + _permute(child_prefix, child_suffix)
+    return result
 
 def tree_output(path, files):
     head, tail = os.path.split(path)

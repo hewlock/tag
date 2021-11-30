@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# ./README.sh > README.md
+
 function help {
     echo ""
     echo "## $1"
@@ -18,6 +20,7 @@ echo "\`\`\`"
 help Add add
 help Clear clear
 help Find find
+help Index index
 help List list
 help Remove remove
 help Rename rename
