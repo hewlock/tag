@@ -185,6 +185,11 @@ def _index(all, debug, recursive, verbose, path, output):
     '''
     abspath = os.path.abspath(path)
 
+    if os.path.exists(output) and os.listdir(output):
+        raise click.ClickException(\
+            f'Index directory "{output}" exists with content. '\
+            + f'Delete "{output}" or choose a different path.')
+
     file_list = []
     def handle_file(file):
         if len(file['tags']) > 0:
