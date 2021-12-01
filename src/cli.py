@@ -206,11 +206,16 @@ def _index(all, debug, recursive, verbose, path, output):
         index_len = len(index[key])
         count += index_len
         parent = os.path.split(key)[0]
+        if not debug:
+            os.makedirs(parent, exist_ok=True)
         if index_len == 1:
             file = index[key][0]
-            out_path = os.path.join(parent, file['filename'])
+            src = file['original']
+            dst = os.path.join(parent, file['filename'])
             if verbose:
-                click.echo(f"{out_path} -> {file['original']}")
+                click.echo(f"{dst} -> {src}")
+            if not debug:
+                os.symlink(src, dst)
         else:
             for file in index[key]:
                 path = file['dir'][len(abspath)+1:]
@@ -220,9 +225,12 @@ def _index(all, debug, recursive, verbose, path, output):
                     id = '-'.join(split)
                     base, ext = os.path.splitext(filename)
                     filename = f"{base}-{id}{ext}"
-                out_path = os.path.join(parent, filename)
+                src = file['original']
+                dst = os.path.join(parent, filename)
                 if verbose:
-                    click.echo(f"{out_path} -> {file['original']}")
+                    click.echo(f"{dst} -> {src}")
+                if not debug:
+                    os.symlink(src, dst)
     if verbose and count > 0:
         message = 'to index' if debug else 'indexed'
         click.echo()
