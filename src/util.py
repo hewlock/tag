@@ -71,8 +71,10 @@ def find_files(path, recursive, all, handler):
             if entry.is_file() and filename_p(entry.name):
                 found(path, entry.name)
 
-def permute(items):
-    return _permute([], items)
+def permute(items, tree):
+    if tree:
+        return _permute([], items)
+    return map(lambda item: [item], items)
 
 def _permute(prefix, suffix):
     result = [prefix] if prefix else []

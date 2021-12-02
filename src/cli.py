@@ -21,8 +21,8 @@ def opt_null():
 def opt_recursive():
     return click.option('--recursive', '-R', default=False, is_flag=True, help='Include subdirectories recursively.')
 
-def opt_tree():
-    return click.option('--tree', '-T', default=False, is_flag=True, help='Print output as tree.')
+def opt_tree(help = 'Print output as tree.'):
+    return click.option('--tree', '-T', default=False, is_flag=True, help=help)
 
 def opt_verbose():
     return click.option('--verbose', '-v', default=False, is_flag=True, help='Print additional output.')
@@ -168,10 +168,11 @@ def _remove(verbose, debug, tags, files):
 @opt_all()
 @opt_debug()
 @opt_recursive()
+@opt_tree(help = 'Create index with nested tag tree.')
 @opt_verbose()
 @arg_path()
 @arg_output()
-def _index(all, debug, recursive, verbose, path, output):
+def _index(all, debug, recursive, tree, verbose, path, output):
     '''Index tagged files.
 
     \b
@@ -198,8 +199,7 @@ def _index(all, debug, recursive, verbose, path, output):
 
     index = {}
     for file in file_list:
-        perms = util.permute(sorted(file['tags']))
-        for perm in perms:
+        for perm in util.permute(sorted(file['tags']), tree):
             filename = os.path.split(file['original'])[1]
             path = os.path.join(output, *perm, filename)
             if path not in index:
