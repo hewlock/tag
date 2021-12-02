@@ -75,9 +75,9 @@ def permute(items):
     return _permute([], items)
 
 def _permute(prefix, suffix):
-    if len(suffix) == 0:
-        return [prefix]
-    result = []
+    result = [prefix] if prefix else []
+    if not suffix:
+        return result
     for index, item in enumerate(suffix):
         child_prefix = prefix.copy()
         child_prefix.append(item)
