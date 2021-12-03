@@ -19,10 +19,10 @@ def opt_null():
     return click.option('--null', '-0', default=False, is_flag=True, help='End output lines with NULL (\\0) instead of newline.')
 
 def opt_recursive():
-    return click.option('--recursive', '-R', default=False, is_flag=True, help='Include subdirectories recursively.')
+    return click.option('--recursive', '-r', default=False, is_flag=True, help='Include subdirectories recursively.')
 
 def opt_tree(help = 'Print output as tree.'):
-    return click.option('--tree', '-T', default=False, is_flag=True, help=help)
+    return click.option('--tree', '-t', default=False, is_flag=True, help=help)
 
 def opt_verbose():
     return click.option('--verbose', '-v', default=False, is_flag=True, help='Print additional output.')
@@ -130,7 +130,7 @@ def _find(all, null, recursive, tree, tag, path):
 
     \b
     Examples:
-      - tag find -R my-tag path/to/files/
+      - tag find -r my-tag path/to/files/
       - tag find my-tag
     '''
     file_list = []
@@ -182,7 +182,7 @@ def _index(all, debug, recursive, tree, verbose, path, output):
     \b
     Examples:
       - tag index my-files my-index
-      - tag index -R my-files my-index
+      - tag index -r my-files my-index
     '''
     abspath = os.path.abspath(path)
 
@@ -256,7 +256,7 @@ def _list(all, count, null, recursive, path):
 
     \b
     Examples:
-      - tag list -R path/to/files/
+      - tag list -r path/to/files/
       - tag list
     '''
     tags = {}
