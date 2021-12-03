@@ -80,14 +80,14 @@ Usage: tag find [OPTIONS] TAG [PATH]
   PATH path to search (default .)
 
   Examples:
-    - tag find -R my-tag path/to/files/
+    - tag find -r my-tag path/to/files/
     - tag find my-tag
 
 Options:
   -a, --all        Include hidden files.
   -0, --null       End output lines with NULL (\0) instead of newline.
-  -R, --recursive  Include subdirectories recursively.
-  -T, --tree       Print output as tree.
+  -r, --recursive  Include subdirectories recursively.
+  -t, --tree       Print output as tree.
   --help           Show this message and exit.
 ```
 
@@ -103,12 +103,13 @@ Usage: tag index [OPTIONS] [PATH] OUTPUT
 
   Examples:
     - tag index my-files my-index
-    - tag index -R my-files my-index
+    - tag index -r my-files my-index
 
 Options:
   -a, --all        Include hidden files.
   -d, --debug      Make no changes to the file system.
-  -R, --recursive  Include subdirectories recursively.
+  -r, --recursive  Include subdirectories recursively.
+  -t, --tree       Create index with nested tag tree.
   -v, --verbose    Print additional output.
   --help           Show this message and exit.
 ```
@@ -123,14 +124,14 @@ Usage: tag list [OPTIONS] [PATH]
   PATH path to search (default .)
 
   Examples:
-    - tag list -R path/to/files/
+    - tag list -r path/to/files/
     - tag list
 
 Options:
   -a, --all        Include hidden files.
   -c, --count      Display count of matches.
   -0, --null       End output lines with NULL (\0) instead of newline.
-  -R, --recursive  Include subdirectories recursively.
+  -r, --recursive  Include subdirectories recursively.
   --help           Show this message and exit.
 ```
 
