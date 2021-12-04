@@ -1,7 +1,7 @@
 # tag-cli
 
 ```
-Usage: tag [OPTIONS] COMMAND [ARGS]...
+Usage: tag.py [OPTIONS] COMMAND [ARGS]...
 
   tag-cli: file name tag manager
 
@@ -33,7 +33,7 @@ Commands:
 ## Add
 
 ```
-Usage: tag add [OPTIONS] TAGS [FILES]...
+Usage: tag.py add [OPTIONS] TAGS [FILES]...
 
   Add tags to files.
 
@@ -53,7 +53,7 @@ Options:
 ## Clear
 
 ```
-Usage: tag clear [OPTIONS] [FILES]...
+Usage: tag.py clear [OPTIONS] [FILES]...
 
   Clear tags from files.
 
@@ -72,7 +72,7 @@ Options:
 ## Find
 
 ```
-Usage: tag find [OPTIONS] TAG [PATH]
+Usage: tag.py find [OPTIONS] TAG [PATH]
 
   Find files by tag.
 
@@ -94,7 +94,7 @@ Options:
 ## Index
 
 ```
-Usage: tag index [OPTIONS] [PATH] OUTPUT
+Usage: tag.py index [OPTIONS] [PATH] OUTPUT
 
   Index tagged files.
 
@@ -117,7 +117,7 @@ Options:
 ## List
 
 ```
-Usage: tag list [OPTIONS] [PATH]
+Usage: tag.py list [OPTIONS] [PATH]
 
   List tags on files.
 
@@ -138,7 +138,7 @@ Options:
 ## Remove
 
 ```
-Usage: tag remove [OPTIONS] TAGS [FILES]...
+Usage: tag.py remove [OPTIONS] TAGS [FILES]...
 
   Remove tags from files.
 
@@ -158,7 +158,7 @@ Options:
 ## Rename
 
 ```
-Usage: tag rename [OPTIONS] OLD_TAG NEW_TAG [FILES]...
+Usage: tag.py rename [OPTIONS] OLD_TAG NEW_TAG [FILES]...
 
   Rename a tag on files.
 
@@ -179,7 +179,7 @@ Options:
 ## Set
 
 ```
-Usage: tag set [OPTIONS] TAGS [FILES]...
+Usage: tag.py set [OPTIONS] TAGS [FILES]...
 
   Set tags on files.
 
@@ -202,7 +202,7 @@ Options:
 ## Sort
 
 ```
-Usage: tag sort [OPTIONS] [FILES]...
+Usage: tag.py sort [OPTIONS] [FILES]...
 
   Sort tags on files.
 
@@ -217,3 +217,4 @@ Options:
   -d, --debug    Make no changes to the file system.
   --help         Show this message and exit.
 ```
+

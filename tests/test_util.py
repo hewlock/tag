@@ -1,6 +1,6 @@
 import unittest
 
-from src import util
+from tag import util
 
 class UtilTest(unittest.TestCase):
 
