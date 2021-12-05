@@ -23,7 +23,8 @@ class CommandTest(unittest.TestCase):
                 print('After:')
                 print(os.system('tree -a'))
             self.assertEqual(result.exit_code, 0, result.output)
-            self.assertEqual(result.output, output)
+            cwd = os.getcwd()
+            self.assertEqual(result.output, output.replace('@cwd', cwd))
             for path in assert_exist:
                 self.assertTrue(Path(path).is_file(), f'file should exist: {path}')
             for path in assert_not_exist:

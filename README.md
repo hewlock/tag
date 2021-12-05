@@ -94,7 +94,7 @@ Options:
 ## Index
 
 ```
-Usage: tag.py index [OPTIONS] [PATH] OUTPUT
+Usage: tag.py index [OPTIONS] PATH OUTPUT
 
   Index tagged files.
 

@@ -32,8 +32,8 @@ def opt_version():
 
 # Arguments
 
-def arg_path():
-    return click.argument('path', default='.', type=click.Path(exists=True))
+def arg_path(default='.'):
+    return click.argument('path', default=default, type=click.Path(exists=True))
 
 def arg_output():
     return click.argument('output')
@@ -170,7 +170,7 @@ def _remove(verbose, debug, tags, files):
 @opt_recursive()
 @opt_tree(help = 'Create index with nested tag tree.')
 @opt_verbose()
-@arg_path()
+@arg_path(default = None)
 @arg_output()
 def _index(all, debug, recursive, tree, verbose, path, output):
     '''Index tagged files.
