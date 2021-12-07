@@ -10,11 +10,8 @@ from .commands.remove import remove_command
 from .commands.rename import rename_command
 from .commands.set import set_command
 from .commands.sort import sort_command
+from .commands.version import version_command, show_version
 import click
-
-VERSION = '0.1.0'
-
-# CLI
 
 @click.group(invoke_without_command=True)
 @options.version()
@@ -34,7 +31,7 @@ def cli(ctx, version):
       - My Title Case File {My-Tag-1}{My-Tag-2}.txt
     '''
     if version:
-        click.echo(VERSION)
+        show_version()
     elif ctx.invoked_subcommand is None:
         click.echo(ctx.get_help())
 
@@ -47,3 +44,4 @@ cli.add_command(remove_command)
 cli.add_command(rename_command)
 cli.add_command(set_command)
 cli.add_command(sort_command)
+cli.add_command(version_command)

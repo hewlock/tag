@@ -6,7 +6,14 @@ import unittest
 
 class CommandTest(unittest.TestCase):
 
-    def run_command_test(self, command, touch, assert_exist = [], assert_not_exist = [], output = '', debug = False):
+    def run_command_test(self,
+                         command,
+                         touch = [],
+                         assert_exist = [],
+                         assert_not_exist = [],
+                         output = '',
+                         debug = False
+                         ):
         runner = CliRunner()
         with runner.isolated_filesystem():
             for path in touch:
