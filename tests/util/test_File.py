@@ -1,8 +1,7 @@
+from tag.util.File import File
+from unittest.mock import patch
 import os
 import unittest
-
-from tag.File import File
-from unittest.mock import patch
 
 MOCK_PATH = '/mock/path'
 

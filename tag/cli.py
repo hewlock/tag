@@ -1,16 +1,14 @@
-from . import arguments
-from . import options
-from . import util
-from .commands.add import add_command
-from .commands.clear import clear_command
-from .commands.find import find_command
-from .commands.index import index_command
-from .commands.list import list_command
-from .commands.remove import remove_command
-from .commands.rename import rename_command
-from .commands.set import set_command
-from .commands.sort import sort_command
-from .commands.version import version_command, show_version
+from .command import options
+from .command.add import add_command
+from .command.clear import clear_command
+from .command.find import find_command
+from .command.index import index_command
+from .command.list import list_command
+from .command.remove import remove_command
+from .command.rename import rename_command
+from .command.set import set_command
+from .command.sort import sort_command
+from .command.version import version_command, show_version
 import click
 
 @click.group(invoke_without_command=True)

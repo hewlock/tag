@@ -1,5 +1,5 @@
-from .. import arguments
-from .. import options
+from . import arguments
+from . import options
 from .. import util
 import click
 
