@@ -11,7 +11,7 @@ def get_tag(raw_tag):
 
 class File:
     def __init__(self, filepath):
-        self._original = os.path.abspath(filepath)
+        self._original = filepath
         self._dir, self._filename = os.path.split(self._original)
         self._base, self._ext = os.path.splitext(self._filename)
         raw_tags = get_raw_tags(self._base)
@@ -29,7 +29,15 @@ class File:
         return self._tags
 
     @property
-    def absolute_path(self):
+    def filename(self):
         tags = sorted(self._tags)
         tag_text = '{' + '}{'.join(tags) + '}' if len(tags) > 0 else ''
-        return os.path.join(self._dir, f"{self._base}{tag_text}{self._ext}")
+        return f"{self._base}{tag_text}{self._ext}"
+
+    @property
+    def relative_path(self):
+        return os.path.join(self._dir, self.filename)
+
+    @property
+    def absolute_path(self):
+        return os.path.abspath(self.relative_path)
