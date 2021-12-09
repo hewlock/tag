@@ -33,14 +33,14 @@ def index_command(all, debug, recursive, tree, verbose, path, output):
 
     file_list = []
     def handle_file(file):
-        if len(file['tags']) > 0:
+        if len(file.tags) > 0:
             file_list.append(file)
     util.find_files(abspath, recursive, all, handle_file)
 
     index = {}
     for file in file_list:
-        for perm in util.permute(sorted(file['tags']), tree):
-            filename = os.path.split(file['original'])[1]
+        for perm in permute(sorted(file.tags), tree):
+            filename = os.path.split(file.original)[1]
             path = os.path.join(output, *perm, filename)
             if path not in index:
                 index[path] = []
@@ -55,22 +55,22 @@ def index_command(all, debug, recursive, tree, verbose, path, output):
             os.makedirs(parent, exist_ok=True)
         if index_len == 1:
             file = index[key][0]
-            src = file['original']
-            dst = os.path.join(parent, file['filename'])
+            src = file.original
+            dst = os.path.join(parent, file.filename)
             if verbose:
                 click.echo(f"{dst} -> {src}")
             if not debug:
                 os.symlink(src, dst)
         else:
             for file in index[key]:
-                path = file['dir'][len(abspath)+1:]
-                filename = file['filename']
+                path = file.dir[len(abspath)+1:]
+                filename = file.filename
                 if path:
                     split = path.split(os.sep)
                     id = '-'.join(split)
                     base, ext = os.path.splitext(filename)
                     filename = f"{base}-{id}{ext}"
-                src = file['original']
+                src = file.original
                 dst = os.path.join(parent, filename)
                 if verbose:
                     click.echo(f"{dst} -> {src}")
@@ -80,3 +80,20 @@ def index_command(all, debug, recursive, tree, verbose, path, output):
         message = 'to index' if debug else 'indexed'
         click.echo()
         click.echo(f"{count} files {message}.")
+
+def permute(items, tree):
+    if tree:
+        return _permute([], items)
+    return map(lambda item: [item], items)
+
+def _permute(prefix, suffix):
+    result = [prefix] if prefix else []
+    if not suffix:
+        return result
+    for index, item in enumerate(suffix):
+        child_prefix = prefix.copy()
+        child_prefix.append(item)
+        child_suffix = suffix.copy()
+        del child_suffix[index]
+        result = result + _permute(child_prefix, child_suffix)
+    return result

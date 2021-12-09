@@ -22,7 +22,7 @@ def list_command(all, count, null, recursive, path):
     '''
     tags = {}
     def handle_file(file):
-        for tag in file['tags']:
+        for tag in file.tags:
             tags[tag] = 1 if not tag in tags else tags[tag] + 1
     util.find_files(path, recursive, all, handle_file)
 
