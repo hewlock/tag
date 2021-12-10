@@ -52,7 +52,7 @@ Will produce symlinks like:
 Suppose I name my Toyota Yaris "Harold" and want to rename all my tags. I can
 use `tag find` to list all uses of the `toyota-yaris` tag and then use
 `tag rename` with `xargs` to rename the tag to `harold`. Using the `-0` arg for
-both find and xargs assures any whitespace in file names won't affect the command.
+both `tag find` and `xargs` assures any whitespace in file names won't affect the command.
 
 ```
 tag find -r0 toyota-yaris ~/Documents | xargs -0 tag rename toyota-yaris harold
