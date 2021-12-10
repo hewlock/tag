@@ -6,15 +6,15 @@ There is nothing special about file tags. They are just text inside the
 filename. You can add or remove them any way you would normally rename a
 file. This tool just makes it a little easier to do things in bulk.
 
-I have arbitrarily chosen to start tags with a open curly `{` and
+I have arbitrarily chosen to start tags with an open curly `{` and
 close tags with a close curly `}`. I thought this was easier to read than some
 other options (including the popular web "hash tag" format).
 
-The main feature of `tag-cli` is to index files by tag. For example, I keep all
-files for the same year in the same folder. This makes it a little challenging
-to find related files (taxes, car maintenance, etc.). `tag-cli index` creates a
+The main feature of `tag` is to index files by tag. For example, if you keep
+all files for the same year in the same folder, it can be a little challenging
+to find related files (taxes, car maintenance, etc.). `tag index` creates a
 directory tree of tags with smylinks to all the tagged documents. This makes it
-easy to find all files tagged with `{taxes-2020}` when tax time comes around.
+easy to find all files tagged with `taxes-2020` when tax time comes around.
 
 For example:
 
