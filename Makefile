@@ -14,7 +14,8 @@ init:
 	pip install -r requirements.txt
 
 readme:
-	./docs/readme.bash > README.md
+	cat ./docs/readme.md > README.md
+	./docs/readme.bash >> README.md
 
 test:
 	python -m unittest

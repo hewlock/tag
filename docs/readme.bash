@@ -9,13 +9,15 @@ function header {
     echo ""
 }
 
-header "# tag-cli"
-header "## Add" add
-header "## Clear" clear
-header "## Find" find
-header "## Index" index
-header "## List" list
-header "## Remove" remove
-header "## Rename" rename
-header "## Set" set
-header "## Sort" sort
+echo "## Usage"
+echo ""
+header "### Synopsis"
+header "### Add" add
+header "### Clear" clear
+header "### Find" find
+header "### Index" index
+header "### List" list
+header "### Remove" remove
+header "### Rename" rename
+header "### Set" set
+header "### Sort" sort
