@@ -1,0 +1,4 @@
+=encoding utf8
+=head1 NAME
+
+A command line interface to manage file name tags.

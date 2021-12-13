@@ -7,6 +7,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 setuptools.setup(
     author=tag.__author__,
     author_email=tag.__email__,
+    data_files=[('share/man/man1', ['docs/tag.1'])],
     description='File name tag tool',
     install_requires=['click'],
     license=tag.__license__,
