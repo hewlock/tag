@@ -36,6 +36,7 @@ command REMOVE remove
 command RENAME rename
 command SET set
 command SORT sort
+command VERSION version
 
 echo "=head1 EXAMPLE"
 echo ""

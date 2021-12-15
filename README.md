@@ -283,3 +283,17 @@ Options:
   --help         Show this message and exit.
 ```
 
+### Version
+
+```
+Usage: tag.py version [OPTIONS]
+
+  Show version information.
+
+  Examples:
+    - tag version
+
+Options:
+  --help  Show this message and exit.
+```
+
