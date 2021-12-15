@@ -1,5 +1,5 @@
-VERSION = $(shell python3 tag.py version)
-DATE = $(shell date -u '+%Y-%m-%d')
+VERSION = $(shell python3 tag.py version | head -n1)
+DATE = $(shell date -u '+%B %Y')
 
 default: help
 
@@ -19,14 +19,15 @@ init:
 	pip install -r requirements.txt
 
 man:
-	pod2man --center='tag manual' \
-		--date='tag-$(VERSION)' \
-		--release=$(DATE) \
-		docs/tag.pod docs/tag.1
+	./docs/man.bash \
+		| pod2man --center='tag manual' \
+			--name='TAG' \
+			--date='$(DATE)' \
+			--release='$(VERSION)' \
+		> docs/tag.1
 
 readme:
-	cat ./docs/readme.md > README.md
-	./docs/readme.bash >> README.md
+	./docs/readme.bash > README.md
 
 test:
 	python -m unittest

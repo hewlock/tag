@@ -15,11 +15,13 @@ import click
 @options.version()
 @click.pass_context
 def cli(ctx, version):
-    '''tag-cli: file name tag manager
+    '''tag - manage file name tags
+
+    Tags are file name text matching: {[a-zA-Z0-9-]+}
 
     \b
     File tags:
-      - are in the file name directly before the extension
+      - are in the file name
       - start with '{' and end with '}'
       - consist of letters, numbers and the '-' character
 

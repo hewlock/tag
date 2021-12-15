@@ -1,5 +1,5 @@
-from .. import __version__
 import click
+import tag
 
 @click.command('version')
 def version_command():
@@ -12,4 +12,10 @@ def version_command():
     show_version()
 
 def show_version():
-    click.echo(__version__)
+    click.echo(f'''tag {tag.__version__}
+License {tag.__license__}: {tag.__license_long__}
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Written by {tag.__author__}.''')
+

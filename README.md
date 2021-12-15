@@ -1,4 +1,4 @@
-# tag-cli
+# Tag
 
 A command line interface to manage file name tags.
 
@@ -65,10 +65,12 @@ tag find -r0 toyota-yaris ~/Documents | xargs -0 tag rename toyota-yaris harold
 ```
 Usage: tag.py [OPTIONS] COMMAND [ARGS]...
 
-  tag-cli: file name tag manager
+  tag - manage file name tags
+
+  Tags are file name text matching: {[a-zA-Z0-9-]+}
 
   File tags:
-    - are in the file name directly before the extension
+    - are in the file name
     - start with '{' and end with '}'
     - consist of letters, numbers and the '-' character
 

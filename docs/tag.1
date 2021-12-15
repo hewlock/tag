@@ -133,9 +133,246 @@
 .\" ========================================================================
 .\"
 .IX Title "TAG 1"
-.TH TAG 1 "tag-0.1.1" "2021-12-13" "tag manual"
+.TH TAG 1 "December 2021" "tag 0.1.1" "tag manual"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
 .nh
-A command line interface to manage file name tags.
+.SH "NAME"
+tag \- manage file name tags
+.SH "SYNOPSIS"
+.IX Header "SYNOPSIS"
+tag [\fI\s-1OPTION\s0\fR]...
+tag \s-1COMMAND\s0 [\fI\s-1OPTION\s0\fR]... [\fI\s-1ARG\s0\fR]...
+.SH "DESCRIPTION"
+.IX Header "DESCRIPTION"
+Usage: tag.py [\s-1OPTIONS\s0] \s-1COMMAND\s0 [\s-1ARGS\s0]...
+.PP
+.Vb 1
+\&  tag \- manage file name tags
+\&
+\&  Tags are file name text matching: {[a\-zA\-Z0\-9\-]+}
+\&
+\&  File tags:
+\&    \- are in the file name
+\&    \- start with \*(Aq{\*(Aq and end with \*(Aq}\*(Aq
+\&    \- consist of letters, numbers and the \*(Aq\-\*(Aq character
+\&
+\&  Examples:
+\&    \- myfile{my\-tag\-1}{my\-tag\-2}.txt
+\&    \- My Title Case File {My\-Tag\-1}{My\-Tag\-2}.txt
+.Ve
+.PP
+Options:
+  \-\-version  Show version information.
+  \-\-help     Show this message and exit.
+.PP
+Commands:
+  add      Add tags to files.
+  clear    Clear tags from files.
+  find     Find files by tag.
+  index    Index tagged files.
+  list     List tags on files.
+  remove   Remove tags from files.
+  rename   Rename a tag on files.
+  set      Set tags on files.
+  sort     Sort tags on files.
+  version  Show version information.
+.SH "COMMANDS"
+.IX Header "COMMANDS"
+.SS "\s-1ADD\s0"
+.IX Subsection "ADD"
+Usage: tag.py add [\s-1OPTIONS\s0] \s-1TAGS\s0 [\s-1FILES\s0]...
+.PP
+.Vb 1
+\&  Add tags to files.
+\&
+\&  TAGS  comma seperated list of tags
+\&  FILES list of files
+\&
+\&  Examples:
+\&    \- tag add my\-tag myfile.txt
+\&    \- tag add my\-tag\-1,my\-tag\-2 *.txt
+.Ve
+.PP
+Options:
+  \-v, \-\-verbose  Show additional output.
+  \-d, \-\-debug    Make no changes to the file system.
+  \-\-help         Show this message and exit.
+.SS "\s-1CLEAR\s0"
+.IX Subsection "CLEAR"
+Usage: tag.py clear [\s-1OPTIONS\s0] [\s-1FILES\s0]...
+.PP
+.Vb 1
+\&  Clear tags from files.
+\&
+\&  FILES list of files
+\&
+\&  Examples:
+\&    \- tag clear myfile{my\-tag}.txt
+\&    \- tag clear *.txt
+.Ve
+.PP
+Options:
+  \-v, \-\-verbose  Show additional output.
+  \-d, \-\-debug    Make no changes to the file system.
+  \-\-help         Show this message and exit.
+.SS "\s-1FIND\s0"
+.IX Subsection "FIND"
+Usage: tag.py find [\s-1OPTIONS\s0] \s-1TAG\s0 [\s-1PATH\s0]
+.PP
+.Vb 1
+\&  Find files by tag.
+\&
+\&  TAG  tag to find
+\&  PATH path to search (default .)
+\&
+\&  Examples:
+\&    \- tag find \-r my\-tag path/to/files/
+\&    \- tag find my\-tag
+.Ve
+.PP
+Options:
+  \-a, \-\-all        Include hidden files.
+  \-0, \-\-null       End output lines with \s-1NULL\s0 (\e0) instead of newline.
+  \-r, \-\-recursive  Include subdirectories recursively.
+  \-t, \-\-tree       Show output as tree.
+  \-\-help           Show this message and exit.
+.SS "\s-1INDEX\s0"
+.IX Subsection "INDEX"
+Usage: tag.py index [\s-1OPTIONS\s0] \s-1PATH OUTPUT\s0
+.PP
+.Vb 1
+\&  Index tagged files.
+\&
+\&  PATH   path to search
+\&  OUTPUT path to new index
+\&
+\&  Examples:
+\&    \- tag index my\-files my\-index
+\&    \- tag index \-r my\-files my\-index
+.Ve
+.PP
+Options:
+  \-a, \-\-all        Include hidden files.
+  \-d, \-\-debug      Make no changes to the file system.
+  \-r, \-\-recursive  Include subdirectories recursively.
+  \-t, \-\-tree       Create index with nested tag tree.
+  \-v, \-\-verbose    Show additional output.
+  \-\-help           Show this message and exit.
+.SS "\s-1LIST\s0"
+.IX Subsection "LIST"
+Usage: tag.py list [\s-1OPTIONS\s0] [\s-1PATH\s0]
+.PP
+.Vb 1
+\&  List tags on files.
+\&
+\&  PATH path to search (default .)
+\&
+\&  Examples:
+\&    \- tag list \-r path/to/files/
+\&    \- tag list
+.Ve
+.PP
+Options:
+  \-a, \-\-all        Include hidden files.
+  \-c, \-\-count      Show count of matches.
+  \-0, \-\-null       End output lines with \s-1NULL\s0 (\e0) instead of newline.
+  \-r, \-\-recursive  Include subdirectories recursively.
+  \-\-help           Show this message and exit.
+.SS "\s-1REMOVE\s0"
+.IX Subsection "REMOVE"
+Usage: tag.py remove [\s-1OPTIONS\s0] \s-1TAGS\s0 [\s-1FILES\s0]...
+.PP
+.Vb 1
+\&  Remove tags from files.
+\&
+\&  TAGS  comma seperated list of tags
+\&  FILES list of files
+\&
+\&  Examples:
+\&    \- tag remove my\-tag myfile{my\-tag}.txt
+\&    \- tag remove my\-tag\-1,my\-tag\-2 *.txt
+.Ve
+.PP
+Options:
+  \-v, \-\-verbose  Show additional output.
+  \-d, \-\-debug    Make no changes to the file system.
+  \-\-help         Show this message and exit.
+.SS "\s-1RENAME\s0"
+.IX Subsection "RENAME"
+Usage: tag.py rename [\s-1OPTIONS\s0] \s-1OLD_TAG NEW_TAG\s0 [\s-1FILES\s0]...
+.PP
+.Vb 1
+\&  Rename a tag on files.
+\&
+\&  OLD_TAG current tag name
+\&  NEW_TAG new tag name
+\&  FILES list of files
+\&
+\&  Examples:
+\&    \- tag rename my\-tag my\-new\-tag myfile{my\-tag}.txt
+\&    \- tag rename my\-tag my\-new\-tag *.txt
+.Ve
+.PP
+Options:
+  \-v, \-\-verbose  Show additional output.
+  \-d, \-\-debug    Make no changes to the file system.
+  \-\-help         Show this message and exit.
+.SS "\s-1SET\s0"
+.IX Subsection "SET"
+Usage: tag.py set [\s-1OPTIONS\s0] \s-1TAGS\s0 [\s-1FILES\s0]...
+.PP
+.Vb 1
+\&  Set tags on files.
+\&
+\&  Add and remove tags to ensure each file has the supplied tags and only the
+\&  supplied tags.
+\&
+\&  TAGS  comma seperated list of tags
+\&  FILES list of files
+\&
+\&  Examples:
+\&    \- tag set my\-tag myfile{my\-tag}.txt
+\&    \- tag set my\-tag\-1,my\-tag\-2 *.txt
+.Ve
+.PP
+Options:
+  \-v, \-\-verbose  Show additional output.
+  \-d, \-\-debug    Make no changes to the file system.
+  \-\-help         Show this message and exit.
+.SS "\s-1SORT\s0"
+.IX Subsection "SORT"
+Usage: tag.py sort [\s-1OPTIONS\s0] [\s-1FILES\s0]...
+.PP
+.Vb 1
+\&  Sort tags on files.
+\&
+\&  FILES list of files
+\&
+\&  Examples:
+\&    \- tag sort myfile{my\-tag\-2}{my\-tag\-1}.txt
+\&    \- tag sort *.txt
+.Ve
+.PP
+Options:
+  \-v, \-\-verbose  Show additional output.
+  \-d, \-\-debug    Make no changes to the file system.
+  \-\-help         Show this message and exit.
+.SH "EXAMPLE"
+.IX Header "EXAMPLE"
+Rename all tags in a directory recursively
+.PP
+.Vb 1
+\&  tag find \-r0 my\-old\-tag ~/Documents | xargs \-0 tag rename my\-old\-tag my\-new\-tag
+.Ve
+.SH "AUTHOR"
+.IX Header "AUTHOR"
+Written by Matthew Moulton.
+.SH "LICENSE"
+.IX Header "LICENSE"
+License \s-1GPL3: GNU\s0 General Public License 3
+.SH "LINKS"
+.IX Header "LINKS"
+.IP "Project: <https://github.com/hewlock/tag\-cli>" 4
+.IX Item "Project: <https://github.com/hewlock/tag-cli>"

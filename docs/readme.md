@@ -1,4 +1,4 @@
-# tag-cli
+# Tag
 
 A command line interface to manage file name tags.
 

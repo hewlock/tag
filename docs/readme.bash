@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+cat docs/readme.md
+
 function header {
     echo "$1"
     echo ""
