@@ -2,27 +2,32 @@
 
 A command line interface to manage file name tags.
 
-## Usage
+## Installation
 
 ### Install from PyPI
 
 ```
 pip install hew-tag
+tag --version
 ```
 
-### Run Locally
+### Install from source
 
 ```
-python -m tag
-```
-
-### Install Locally
-
-To install in "editable" mode:
-
-```
+git clone https://github.com/hewlock/tag.git
+cd tag
+make init
 pip install -e .
-tag
+tag --version
+```
+
+### Run from source
+
+```
+git clone https://github.com/hewlock/tag.git
+cd tag
+make init
+python -m tag --version
 ```
 
 ## Description
