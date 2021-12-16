@@ -15,7 +15,7 @@ setuptools.setup(
     long_description_content_type='text/markdown',
     name='tag',
     setup_requires=['click'],
-    url='https://github.com/hewlock/tag-cli',
+    url='https://github.com/hewlock/tag',
     version=tag.__version__,
 
     classifiers=[

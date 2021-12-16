@@ -67,10 +67,8 @@ Usage: tag.py [OPTIONS] COMMAND [ARGS]...
 
   tag - manage file name tags
 
-  Tags are file name text matching: {[a-zA-Z0-9-]+}
-
   File tags:
-    - are in the file name
+    - are in the file name matching: {[a-zA-Z0-9-]+}
     - start with '{' and end with '}'
     - consist of letters, numbers and the '-' character
 
