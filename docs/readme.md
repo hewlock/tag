@@ -2,6 +2,25 @@
 
 A command line interface to manage file name tags.
 
+## Usage
+
+### Run Locally
+
+```
+python -m tag
+```
+
+### Install Locally
+
+To install in "editable" mode:
+
+```
+pip install -e .
+tag
+```
+
+## Description
+
 There is nothing special about file tags. They are just text inside the
 filename. You can add or remove them any way you would normally rename a
 file. This tool just makes it a little easier to do things in bulk.

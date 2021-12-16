@@ -1,4 +1,4 @@
-VERSION = $(shell python3 tag.py version | head -n1)
+VERSION = $(shell python -m tag version | head -n1)
 DATE = $(shell date -u '+%B %Y')
 
 default: help

@@ -1,12 +1,12 @@
 function command {
     echo "=head2 $1"
     echo ""
-    ./tag.py $2 --help
+    tag $2 --help
     echo ""
 }
 
 function version {
-    ./tag.py version | sed -n "$1p"
+    tag version | sed -n "$1p"
 }
 
 echo "=encoding utf8"
@@ -22,7 +22,7 @@ echo "tag COMMAND [I<OPTION>]... [I<ARG>]..."
 echo ""
 echo "=head1 DESCRIPTION"
 echo ""
-./tag.py --help
+tag --help
 echo ""
 echo "=head1 COMMANDS"
 echo ""

@@ -5,6 +5,8 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
+    name='tag',
+
     author=tag.__author__,
     author_email=tag.__email__,
     data_files=[('share/man/man1', ['docs/tag.1'])],
@@ -13,7 +15,6 @@ setuptools.setup(
     license=tag.__license__,
     long_description=long_description,
     long_description_content_type='text/markdown',
-    name='tag',
     setup_requires=['click'],
     url='https://github.com/hewlock/tag',
     version=tag.__version__,
@@ -26,7 +27,7 @@ setuptools.setup(
     ],
     entry_points={
         'console_scripts': [
-            'tag = tag.cli:cli'
+            'tag = tag.__main__:main'
         ],
     },
     packages=[

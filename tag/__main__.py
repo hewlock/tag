@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 import tag.cli as cli
 
-if __name__ == '__main__':
+def main():
     cli.cli(obj={})
+
+if __name__ == '__main__':
+    main()

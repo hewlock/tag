@@ -2,6 +2,25 @@
 
 A command line interface to manage file name tags.
 
+## Usage
+
+### Run Locally
+
+```
+python -m tag
+```
+
+### Install Locally
+
+To install in "editable" mode:
+
+```
+pip install -e .
+tag
+```
+
+## Description
+
 There is nothing special about file tags. They are just text inside the
 filename. You can add or remove them any way you would normally rename a
 file. This tool just makes it a little easier to do things in bulk.
@@ -63,7 +82,7 @@ tag find -r0 toyota-yaris ~/Documents | xargs -0 tag rename toyota-yaris harold
 ### Synopsis
 
 ```
-Usage: tag.py [OPTIONS] COMMAND [ARGS]...
+Usage: tag [OPTIONS] COMMAND [ARGS]...
 
   tag - manage file name tags
 
@@ -96,7 +115,7 @@ Commands:
 ### Add
 
 ```
-Usage: tag.py add [OPTIONS] TAGS [FILES]...
+Usage: tag add [OPTIONS] TAGS [FILES]...
 
   Add tags to files.
 
@@ -116,7 +135,7 @@ Options:
 ### Clear
 
 ```
-Usage: tag.py clear [OPTIONS] [FILES]...
+Usage: tag clear [OPTIONS] [FILES]...
 
   Clear tags from files.
 
@@ -135,7 +154,7 @@ Options:
 ### Find
 
 ```
-Usage: tag.py find [OPTIONS] TAG [PATH]
+Usage: tag find [OPTIONS] TAG [PATH]
 
   Find files by tag.
 
@@ -157,7 +176,7 @@ Options:
 ### Index
 
 ```
-Usage: tag.py index [OPTIONS] PATH OUTPUT
+Usage: tag index [OPTIONS] PATH OUTPUT
 
   Index tagged files.
 
@@ -180,7 +199,7 @@ Options:
 ### List
 
 ```
-Usage: tag.py list [OPTIONS] [PATH]
+Usage: tag list [OPTIONS] [PATH]
 
   List tags on files.
 
@@ -201,7 +220,7 @@ Options:
 ### Remove
 
 ```
-Usage: tag.py remove [OPTIONS] TAGS [FILES]...
+Usage: tag remove [OPTIONS] TAGS [FILES]...
 
   Remove tags from files.
 
@@ -221,7 +240,7 @@ Options:
 ### Rename
 
 ```
-Usage: tag.py rename [OPTIONS] OLD_TAG NEW_TAG [FILES]...
+Usage: tag rename [OPTIONS] OLD_TAG NEW_TAG [FILES]...
 
   Rename a tag on files.
 
@@ -242,7 +261,7 @@ Options:
 ### Set
 
 ```
-Usage: tag.py set [OPTIONS] TAGS [FILES]...
+Usage: tag set [OPTIONS] TAGS [FILES]...
 
   Set tags on files.
 
@@ -265,7 +284,7 @@ Options:
 ### Sort
 
 ```
-Usage: tag.py sort [OPTIONS] [FILES]...
+Usage: tag sort [OPTIONS] [FILES]...
 
   Sort tags on files.
 
@@ -284,7 +303,7 @@ Options:
 ### Version
 
 ```
-Usage: tag.py version [OPTIONS]
+Usage: tag version [OPTIONS]
 
   Show version information.
 

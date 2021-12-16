@@ -6,7 +6,7 @@ function header {
     echo "$1"
     echo ""
     echo "\`\`\`"
-    ./tag.py $2 --help
+    tag $2 --help
     echo "\`\`\`"
     echo ""
 }
