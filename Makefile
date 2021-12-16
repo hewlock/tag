@@ -6,12 +6,16 @@ default: help
 help:
 	@echo 'make:           Display help.'
 	@echo 'make clean:     Delete compiled files.'
+	@echo 'make docs:      Create all documentation.'
 	@echo 'make init:      Install requirements.txt.'
+	@echo 'make man:       Create man documentation.'
 	@echo 'make readme:    Create README documentation.'
 	@echo 'make test:      Run unit tests.'
 
 clean:
 	find . -depth -name __pycache__ -type d -exec rm -r -- {} \;
+	rm -rf hew_tag.egg-info/
+	rm -rf dist/
 
 docs: man readme
 

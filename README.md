@@ -4,6 +4,12 @@ A command line interface to manage file name tags.
 
 ## Usage
 
+### Install from PyPI
+
+```
+pip install hew-tag
+```
+
 ### Run Locally
 
 ```
